@@ -121,7 +121,36 @@ export default function Details({ pokemon }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+//SSR
+// export async function getServerSideProps({ params }) {
+//   const res = await fetch(
+//     `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
+//   );
+
+//   return {
+//     props: {
+//       pokemon: await res.json(),
+//     },
+//   };
+// }
+
+//SSG
+
+export async function getStaticPaths() {
+  const res = await fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json");
+  const pokemons = await res.json();
+
+  return {
+    paths: pokemons.map((pokemon) => ({
+      params: {
+        id: pokemon.id.toString(),
+      },
+    })),
+    fallback : false,
+  };
+}
+
+export async function getStaticProps({ params }) {
   const res = await fetch(
     `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
   );
@@ -129,6 +158,7 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       pokemon: await res.json(),
+      revalidate : 30 //once the page gets refreshed, it will revalidate in 30 seconds, if it not revalidated in the last 30secs
     },
   };
 }

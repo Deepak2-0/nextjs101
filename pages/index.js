@@ -81,7 +81,19 @@ export default function Home({ pokemon }) {
   );
 }
 
-export async function getServerSideProps() {
+//SSR
+// export async function getServerSideProps() {
+//   const res = await fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json");
+//   const pokemon = await res.json();
+//   return {
+//     props: {
+//       pokemon: pokemon,
+//     },
+//   };
+// }
+
+//SSG
+export async function getStaticProps() {
   const res = await fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json");
   const pokemon = await res.json();
   return {
