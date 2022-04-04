@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Contains four branches
+i)main
+ii)feature/csr
+iii)feature/csrToSSR
+iv)feature/ssrToSSG
+
 First, run the development server:
 
 ```bash
